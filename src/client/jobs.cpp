@@ -1,5 +1,7 @@
 // Copyright © 2025 CCP ehf.
 #include "carbongrpc/client/jobs.h"
+
+#include <algorithm>
 using namespace monolith_grpc::client;
 
 // cppcheck-suppress unusedFunction

@@ -7,8 +7,8 @@ using namespace monolith_grpc::client;
 #include <iostream>
 #include <thread>
 
-#if __APPLE__
-// c-ares doesn't include these headers for us on macOS
+#if defined(__APPLE__) || defined(__linux__)
+// c-ares 1.34 does not include these headers on macOS or Linux.
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
