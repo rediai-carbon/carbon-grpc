@@ -109,7 +109,9 @@ google::protobuf::Message* Helpers::GetCProtoInsidePyProto(PyObject* msg) const 
     while (tp != nullptr) {
       if (tp == private_->c_message_type) {
         auto* cmsg = reinterpret_cast<google::protobuf::python::CMessage*>(msg);
-        return cmsg->message;
+        // protobuf 36.2 stores this pointer as const. The helper's contract
+        // still returns the mutable message the caller already owns.
+        return const_cast<google::protobuf::Message*>(cmsg->message);
       }
       tp = tp->tp_base;
     }
@@ -139,7 +141,7 @@ google::protobuf::Message* Helpers::GetCProtoInsidePyProto(PyObject* msg) const 
     }
 
     auto* cmsg = reinterpret_cast<google::protobuf::python::CMessage*>(msg);
-    return cmsg->message;
+    return const_cast<google::protobuf::Message*>(cmsg->message);
   }
 }
 
